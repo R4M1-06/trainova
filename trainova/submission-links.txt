@@ -1,0 +1,8 @@
+Team members (name, student ID):
+1. NAME, ID
+2. NAME, ID
+3. NAME, ID
+
+Repository URL:
+Commit hash:
+Render front-end URL:

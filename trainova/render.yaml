@@ -1,0 +1,11 @@
+# Optional Render Blueprint. Or set the same values by hand in the Render dashboard.
+services:
+  - type: web
+    name: trainova
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite   # fixes the 404 when refreshing /login, /about, ...
+        source: /*
+        destination: /index.html
