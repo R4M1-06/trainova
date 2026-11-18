@@ -3,6 +3,7 @@ services:
   - type: web
     name: trainova
     runtime: static
+    rootDir: trainova
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     routes:

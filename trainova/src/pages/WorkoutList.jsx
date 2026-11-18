@@ -1,15 +1,62 @@
 import { useMemo, useState } from "react";
-import { workouts } from "../data/mockWorkouts.js";
+import { workouts as mockWorkouts } from "../data/mockWorkouts.js";
 import WorkoutCard from "../components/WorkoutCard.jsx";
+import WorkoutForm from "../components/WorkoutForm.jsx";
 
-const muscles = ["all", ...new Set(workouts.map((w) => w.muscle))];
 const statuses = ["all", "progress", "plateau", "deload"];
 
-export default function WorkoutList() {
+export default function WorkoutList({ account }) {
+  const storageKey = `trainova.workouts.v1.${account}`;
+  const [workouts, setWorkouts] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+      return Array.isArray(saved) ? saved : mockWorkouts;
+    } catch {
+      return mockWorkouts;
+    }
+  });
+  const [editing, setEditing] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [deleting, setDeleting] = useState(null);
+  const [message, setMessage] = useState("");
+  const [saveError, setSaveError] = useState("");
+
+  function persist(next, success) {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(next));
+      setWorkouts(next);
+      setMessage(success);
+      setSaveError("");
+      return true;
+    } catch {
+      setSaveError("Could not save changes in this browser. Please try again.");
+      return false;
+    }
+  }
+
+  function saveWorkout(values) {
+    const next = editing
+      ? workouts.map((workout) => workout.id === editing.id ? { ...values, id: editing.id } : workout)
+      : [...workouts, { ...values, id: crypto.randomUUID() }];
+    if (persist(next, editing ? "Workout updated." : "Workout added. Check your filters if it is not visible.")) {
+      setShowForm(false);
+      setEditing(null);
+    }
+  }
+
+  function editWorkout(workout) {
+    setEditing(workout);
+    setShowForm(true);
+    setDeleting(null);
+    setMessage("");
+    setSaveError("");
+  }
   const [query, setQuery] = useState("");
   const [muscle, setMuscle] = useState("all");
   const [status, setStatus] = useState("all");
   const [sort, setSort] = useState("date-desc");
+
+  const muscles = ["all", ...new Set(workouts.map((w) => w.muscle))];
 
   // Filter, then search, then sort. All three work together.
   const results = useMemo(() => {
@@ -25,13 +72,34 @@ export default function WorkoutList() {
       const r = key === "date" ? a.date.localeCompare(b.date) : a[key] - b[key];
       return dir === "asc" ? r : -r;
     });
-  }, [query, muscle, status, sort]);
+  }, [workouts, query, muscle, status, sort]);
 
   const clear = () => { setQuery(""); setMuscle("all"); setStatus("all"); setSort("date-desc"); };
 
   return (
     <section>
       <h1>Workout log</h1>
+      <button className="btn add-workout" type="button" onClick={() => {
+        setEditing(null); setShowForm(true); setDeleting(null); setMessage(""); setSaveError("");
+      }}>Add workout</button>
+      {message && <p role="status">{message}</p>}
+      {saveError && <p className="error" role="alert">{saveError}</p>}
+      {showForm && <WorkoutForm
+        key={editing?.id ?? "new"}
+        workout={editing}
+        muscles={[...new Set(mockWorkouts.map((workout) => workout.muscle))]}
+        onSave={saveWorkout}
+        onCancel={() => { setShowForm(false); setEditing(null); setSaveError(""); }}
+      />}
+      {deleting && <section className="card delete-confirm" aria-label="Confirm deletion">
+        <p>Delete {deleting.exercise} on {deleting.date}?</p>
+        <div className="actions">
+          <button className="btn" type="button" onClick={() => {
+            if (persist(workouts.filter((workout) => workout.id !== deleting.id), "Workout deleted.")) setDeleting(null);
+          }}>Confirm delete</button>
+          <button className="btn secondary" type="button" onClick={() => { setDeleting(null); setSaveError(""); }}>Cancel</button>
+        </div>
+      </section>}
       <div className="controls">
         <label className="field">Search exercise
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. bench" />
@@ -66,7 +134,9 @@ export default function WorkoutList() {
           <button className="btn" onClick={clear}>Clear filters</button>
         </div>
       ) : (
-        <div className="grid">{results.map((w) => <WorkoutCard key={w.id} workout={w} />)}</div>
+        <div className="grid">{results.map((w) => <WorkoutCard key={w.id} workout={w} onEdit={editWorkout} onDelete={(workout) => {
+          setDeleting(workout); setShowForm(false); setMessage(""); setSaveError("");
+        }} />)}</div>
       )}
     </section>
   );
