@@ -1,15 +1,17 @@
 import { useMemo, useState } from "react";
-import { workouts } from "../data/mockWorkouts.js";
+import { workouts as mockWorkouts } from "../data/mockWorkouts.js";
 import WorkoutCard from "../components/WorkoutCard.jsx";
 
-const muscles = ["all", ...new Set(workouts.map((w) => w.muscle))];
 const statuses = ["all", "progress", "plateau", "deload"];
 
 export default function WorkoutList() {
+  const [workouts] = useState(mockWorkouts);
   const [query, setQuery] = useState("");
   const [muscle, setMuscle] = useState("all");
   const [status, setStatus] = useState("all");
   const [sort, setSort] = useState("date-desc");
+
+  const muscles = ["all", ...new Set(workouts.map((w) => w.muscle))];
 
   // Filter, then search, then sort. All three work together.
   const results = useMemo(() => {
@@ -25,7 +27,7 @@ export default function WorkoutList() {
       const r = key === "date" ? a.date.localeCompare(b.date) : a[key] - b[key];
       return dir === "asc" ? r : -r;
     });
-  }, [query, muscle, status, sort]);
+  }, [workouts, query, muscle, status, sort]);
 
   const clear = () => { setQuery(""); setMuscle("all"); setStatus("all"); setSort("date-desc"); };
 
