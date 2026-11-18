@@ -1,31 +1,45 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Field from "../components/Field.jsx";
+import { verifyLogin } from "../data/localAuth.js";
 
-export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
+export default function Login({ onSuccess }) {
+  const [form, setForm] = useState({ identifier: "", password: "" });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-
+  const [pending, setPending] = useState(false);
   const change = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const submit = (e) => {
+  async function submit(e) {
     e.preventDefault();
+    if (pending) return;
     const err = {};
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) err.email = "Enter a valid email address.";
-    if (form.password.length < 6) err.password = "Password must be at least 6 characters.";
+    if (!form.identifier.trim()) err.identifier = "Enter your username or email.";
+    if (!form.password) err.password = "Enter your password.";
     setErrors(err);
-    if (Object.keys(err).length === 0) navigate("/"); // Milestone 1: no real auth yet
-  };
+    if (Object.keys(err).length) return;
+
+    setPending(true);
+    try {
+      const email = await verifyLogin(form.identifier, form.password);
+      if (email) onSuccess(email);
+      else setErrors({ form: "Incorrect username, email or password." });
+    } catch {
+      setErrors({ form: "Could not access your browser account. Please try again." });
+    } finally {
+      setPending(false);
+    }
+  }
 
   return (
-    <section className="card narrow">
+    <section className="card narrow auth-card">
       <h1>Log in</h1>
       <form onSubmit={submit} noValidate>
-        <Field label="Email" name="email" type="email" value={form.email} onChange={change} error={errors.email} />
-        <Field label="Password" name="password" type="password" value={form.password} onChange={change} error={errors.password} />
-        <button className="btn" type="submit">Log in</button>
+        <Field label="Username or email" name="identifier" autoComplete="username" value={form.identifier} onChange={change} error={errors.identifier} />
+        <Field label="Password" name="password" type="password" autoComplete="current-password" value={form.password} onChange={change} error={errors.password} />
+        {errors.form && <p className="error" role="alert">{errors.form}</p>}
+        <button className="btn" disabled={pending}>Log in</button>
       </form>
+      <p>Don’t have an account? <Link to="/register">Create an account</Link></p>
     </section>
   );
 }
