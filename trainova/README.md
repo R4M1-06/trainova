@@ -1,48 +1,79 @@
 # Trainova
 
-A workout coach for the web. Milestone 1: React front end with mock data (Workouts list, Login, Registration, About).
+A responsive React SPA for tracking workout sessions. This Milestone 1 prototype includes a workout list, login, registration, and About routes. It starts with 15 structured local mock records.
 
-## Run it
+## Setup and run
 
-```bash
+Install Node.js with npm. From the repository root:
+
+```sh
+cd trainova
 npm install
-npm run dev      # http://localhost:5173
-npm run build    # production build into dist/
+npm run dev
 ```
+
+Open the local URL printed by Vite. To build and preview production output:
+
+```sh
+npm run build
+npm run preview
+```
+
+The build output is trainova/dist when commands are run from the repository root as above.
+
+## Features and prototype scope
+
+- Register a demo account with a unique username and email. Log in with either identifier and the password.
+- Successful sign-in opens the workout list. Logout returns to login.
+- About and workout routes require the browser-local demo session.
+- Search, muscle filter, status filter, and date/weight/estimated-1RM sort apply together using filter() and sort().
+- Add, edit, and delete workouts. Confirm deletion before applying it.
+- Each account starts with the 15 mock records and saves its own changes in this browser's localStorage. Clearing browser storage removes local accounts and workouts.
+- Estimated 1RM uses the Epley formula: weight × (1 + best-set reps / 30), rounded to one decimal place.
+- Form errors, save/delete feedback, empty results, and clear-filters action are provided.
+
+Milestone 1 requires placeholder auth forms. This version adds the team's requested browser-only demonstration. It has no server identity or authorization boundary. Milestone 2 still requires Express, MongoDB, server-side ownership checks, password hashing, and cookie sessions.
 
 ## Structure
 
+- src/App.jsx: routes and demo session state.
+- src/components/Navbar.jsx: shared navigation and logout.
+- src/components/Field.jsx: reusable labelled inputs and field errors.
+- src/components/WorkoutCard.jsx: workout display and edit/delete callbacks.
+- src/components/WorkoutForm.jsx: create/edit form and client-side validation.
+- src/pages/WorkoutList.jsx: state, combined filtering/sorting, and local workout storage.
+- src/pages/Login.jsx, Register.jsx, About.jsx: remaining routes.
+- src/data/mockWorkouts.js: the 15 initial records.
+- src/data/localAuth.js: browser-local demo accounts.
+- src/index.css: shared responsive styles.
+
+## Render Static Site
+
+When connecting this repository, set Root Directory to trainova, Build Command to npm install && npm run build, and Publish Directory to dist. Configure a rewrite from /* to /index.html so direct route loads work. The render.yaml file is inside trainova and describes equivalent build settings.
+
+Public repository: https://github.com/R4M1-06/trainova
+
+Deployed URL is awaiting the team. Test the actual deployed URL in a private browser window and refresh /login and /about after deployment.
+
+## Collaboration and submission
+
+Each student uses their own GitHub account and a personal branch. Open a pull request into main for review. Contributions must reflect work actually performed by that member.
+
+Team names, student IDs, and individual contribution summaries are awaiting confirmation.
+
+Before submitting:
+- Confirm the mandatory requirements against the instructor's assignment.
+- Complete team details in About and submission-links.txt.
+- Complete the live Render URL and submitted revision in submission-links.txt.
+- Confirm the AI disclosure in AI-USE.md and record actual student review.
+- Verify every member can explain and modify the submitted code.
+- Generate a source ZIP from the chosen Git revision without node_modules, dist, .git, or secret .env files.
+- Verify that the ZIP matches the submitted revision.
+
+To create the source ZIP after choosing a final committed revision, from the repository root:
+
+```sh
+git archive --format=zip --output=../trainova-milestone1.zip HEAD
 ```
-src/
-  App.jsx                 routes
-  components/             Navbar, Field, WorkoutCard
-  pages/                  WorkoutList, Login, Register, About
-  data/mockWorkouts.js    15 mock records (shared data shape)
-  index.css               all styles (CSS variables at the top)
-```
 
-## Who owns what (edit this)
-
-- Member 1: setup, routing, deployment, docs, mock data
-- Member 2: `WorkoutList.jsx`, `WorkoutCard.jsx`
-- Member 3: `Login.jsx`, `Register.jsx`, `About.jsx`, `index.css`
-
-## Git rules
-
-- One branch per person (`feature/<name>`), pull request into `main`, nobody pushes straight to `main`.
-- Commit from your own GitHub account (check `git config user.name` and `user.email`).
-- Never commit `.env` or `node_modules` (already in `.gitignore`).
-
-## Deploy on Render (Static Site)
-
-- Build command: `npm install && npm run build`
-- Publish directory: `dist`
-- Redirects/Rewrites: source `/*`, destination `/index.html`, action **Rewrite** (stops the 404 when you refresh a page like `/about`).
-- Or use `render.yaml` as a Blueprint, which sets the same values.
-
-## Submission checklist
-
-- Fresh clone runs after `npm install`
-- Live Render URL works in an incognito window, and refreshing `/login` does not 404
-- ZIP matches the submitted commit and has no `node_modules`
-- `submission-links.txt` and `AI-USE.md` are filled in
+Obtain the submitted revision with git rev-parse HEAD and provide it with the delivery links. Automated build/browser checks are described in the Codex report, with a final deployed check still required.

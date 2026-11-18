@@ -33,7 +33,7 @@ export default function App() {
       <main className="page">
         {session ? (
           <Routes>
-            <Route path="/" element={<WorkoutList />} />
+            <Route path="/" element={<WorkoutList key={session} account={session} />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Navigate to="/" replace />} />
             <Route path="/register" element={<Navigate to="/" replace />} />

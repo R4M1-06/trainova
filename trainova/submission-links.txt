@@ -1,8 +1,16 @@
-Team members (name, student ID):
-1. NAME, ID
-2. NAME, ID
-3. NAME, ID
+Project title: Trainova
 
-Repository URL:
-Commit hash:
-Render front-end URL:
+Team members (name, student ID):
+Awaiting confirmed team names and IDs.
+
+Public GitHub repository URL:
+https://github.com/R4M1-06/trainova
+
+Submitted repository commit hash:
+Awaiting the final submitted revision. Obtain it with git rev-parse HEAD.
+
+Deployed Render front-end URL:
+Awaiting the team's existing Render URL.
+
+Individual contribution details:
+Awaiting confirmation of actual work performed by each student.

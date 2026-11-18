@@ -27,6 +27,15 @@ input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{ou
 .badge{padding:2px 10px;border-radius:99px;font-size:.8rem;font-weight:700;border:1px solid currentColor}
 .badge.progress{color:var(--good)}.badge.plateau{color:var(--warn)}.badge.deload{color:var(--cool)}
 .empty{text-align:center;padding:32px 16px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn.secondary{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.add-workout,.workout-form,.delete-confirm{margin-bottom:16px}
+.workout-form h2{font-size:1.25rem;margin-top:0}
+.grid>*{min-width:0}
+.workout-top{align-items:flex-start;gap:10px}
+.workout h3,.workout p,.delete-confirm p{overflow-wrap:anywhere}
+input,select{min-width:0}
+button{min-height:40px}
 .auth-card{margin-top:clamp(16px,8vh,80px);padding:clamp(20px,4vw,32px)}
 .auth-card form{margin-top:20px}
 .auth-card .btn{width:100%}
