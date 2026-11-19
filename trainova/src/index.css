@@ -44,3 +44,13 @@ button{min-height:40px}
 .auth-card a{color:var(--accent);font-weight:600}
 .logout{background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer}
 @media (max-width:520px){.page{padding:16px 12px 40px}h1{font-size:1.4rem}}
+.planner{margin-bottom:16px}
+.planner h2{font-size:1.25rem;margin:0 0 12px}
+.planner h3{margin:16px 0 8px}
+.planner h4{margin:10px 0 4px;font-size:.95rem;color:var(--muted)}
+.planner ul{margin:0;padding-left:20px}
+.planner li{margin:2px 0}
+.muscle-lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 16px}
+.rest-day{font-weight:700;margin:16px 0 0}
+.library-title{padding-top:16px;border-top:1px solid var(--line)}
+.library-filter{max-width:260px}
