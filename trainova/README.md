@@ -28,6 +28,7 @@ The build output is trainova/dist when commands are run from the repository root
 - About and workout routes require the browser-local demo session.
 - Search, muscle filter, status filter, and date/weight/estimated-1RM sort apply together using filter() and sort().
 - Workout planner: choose a split and weekday to view its muscle groups and exercises, or a rest day. The exercise library can also be filtered by muscle.
+- Glass-themed interface with a responsive navigation menu and logout confirmation.
 - Add, edit, and delete workouts. Confirm deletion before applying it.
 - Each account starts with the 15 mock records and saves its own changes in this browser's localStorage. Clearing browser storage removes local accounts and workouts.
 - Estimated 1RM uses the Epley formula: weight × (1 + best-set reps / 30), rounded to one decimal place.
@@ -49,6 +50,7 @@ Milestone 1 requires placeholder auth forms. This version adds the team's reques
 - src/data/planner.js: exercise lists and weekly split schedules.
 - src/data/localAuth.js: browser-local demo accounts.
 - src/index.css: shared responsive styles.
+- public/trainova-background.jpg: background image used by the glass theme. The logo falls back to system fonts unless a licensed Pricedown font is supplied.
 
 ## Render Static Site
 
