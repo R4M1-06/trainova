@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { workouts as mockWorkouts } from "../data/mockWorkouts.js";
 import WorkoutCard from "../components/WorkoutCard.jsx";
 import WorkoutForm from "../components/WorkoutForm.jsx";
+import WorkoutPlanner from "../components/WorkoutPlanner.jsx";
 
 const statuses = ["all", "progress", "plateau", "deload"];
 
@@ -79,6 +80,7 @@ export default function WorkoutList({ account }) {
   return (
     <section>
       <h1>Workout log</h1>
+      <WorkoutPlanner />
       <button className="btn add-workout" type="button" onClick={() => {
         setEditing(null); setShowForm(true); setDeleting(null); setMessage(""); setSaveError("");
       }}>Add workout</button>
