@@ -54,7 +54,7 @@ Milestone 1 requires placeholder auth forms. This version adds the team's reques
 
 ## Render Static Site
 
-When connecting this repository, set Root Directory to trainova, Build Command to npm install && npm run build, and Publish Directory to dist. Configure a rewrite from /* to /index.html so direct route loads work. The render.yaml file is inside trainova and describes equivalent build settings.
+When connecting this repository on Render, set Root Directory to `trainova`, Build Command to `npm install && npm run build`, and Publish Directory to `dist`. Configure a rewrite from `/*` to `/index.html` so direct route loads work. The repository-root `render.yaml` provides these settings and the rewrite.
 
 Public repository: https://github.com/R4M1-06/trainova
 
