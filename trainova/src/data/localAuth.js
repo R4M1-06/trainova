@@ -24,18 +24,19 @@ export function currentSession() {
   }
 }
 
+// Returns translation keys for field errors (see i18n/translations.js), or {} on success.
 export async function registerAccount(username, email, password) {
   username = normalize(username);
   email = normalize(email);
-  const salt = Array.from(crypto.getRandomValues(new Uint8Array(16)));
-  const hash = await passwordHash(password, salt);
   const accounts = readAccounts();
   if (accounts.some((account) => account.username === username)) {
-    return { username: "That username is already in use." };
+    return { username: "err.usernameTaken" };
   }
   if (accounts.some((account) => account.email === email)) {
-    return { email: "That email is already registered." };
+    return { email: "err.emailTaken" };
   }
+  const salt = Array.from(crypto.getRandomValues(new Uint8Array(16)));
+  const hash = await passwordHash(password, salt);
   accounts.push({ username, email, salt, hash });
   localStorage.setItem(accountsKey, JSON.stringify(accounts));
   return {};

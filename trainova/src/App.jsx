@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import WorkoutList from "./pages/WorkoutList.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import About from "./pages/About.jsx";
 import { currentSession, sessionKey } from "./data/localAuth.js";
+import { LanguageProvider, useLang } from "./i18n/LanguageContext.jsx";
 
-export default function App() {
+function NotFound() {
+  const { t } = useLang();
+  return (
+    <section className="card narrow">
+      <p>{t("nf.text")}</p>
+      <Link className="btn" to="/">{t("nf.back")}</Link>
+    </section>
+  );
+}
+
+function AppShell() {
   const [session, setSession] = useState(currentSession);
 
   useEffect(() => {
@@ -37,7 +48,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Navigate to="/" replace />} />
             <Route path="/register" element={<Navigate to="/" replace />} />
-            <Route path="*" element={<p>Page not found.</p>} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         ) : (
           <Routes>
@@ -48,5 +59,13 @@ export default function App() {
         )}
       </main>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AppShell />
+    </LanguageProvider>
   );
 }

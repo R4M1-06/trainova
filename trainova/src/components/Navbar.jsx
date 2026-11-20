@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import LanguageToggle from "./LanguageToggle.jsx";
+import { useLang } from "../i18n/LanguageContext.jsx";
 
 const links = [
-  ["/", "Workouts"],
-  ["/about", "About"],
+  ["/", "nav.workouts"],
+  ["/about", "nav.about"],
 ];
 
 export default function Navbar({ signedIn, onLogout }) {
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
@@ -38,23 +41,26 @@ export default function Navbar({ signedIn, onLogout }) {
       <header className="nav">
         <div className="nav-bar">
           <span className="brand">Trainova</span>
-          {signedIn && (
-            <button
-              type="button"
-              className={`burger${open ? " open" : ""}`}
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              aria-controls="main-menu"
-              onClick={() => setOpen(!open)}
-            >
-              <i /><i /><i />
-            </button>
-          )}
+          <div className="nav-actions">
+            <LanguageToggle />
+            {signedIn && (
+              <button
+                type="button"
+                className={`burger${open ? " open" : ""}`}
+                aria-label={open ? t("nav.closeMenu") : t("nav.openMenu")}
+                aria-expanded={open}
+                aria-controls="main-menu"
+                onClick={() => setOpen(!open)}
+              >
+                <i /><i /><i />
+              </button>
+            )}
+          </div>
         </div>
         {signedIn && (
           <div id="main-menu" className={`menu${open ? " open" : ""}`}>
-            <nav className="menu-inner" aria-label="Main">
-              {links.map(([to, label]) => (
+            <nav className="menu-inner" aria-label={t("nav.main")}>
+              {links.map(([to, key]) => (
                 <NavLink
                   key={to}
                   to={to}
@@ -62,11 +68,11 @@ export default function Navbar({ signedIn, onLogout }) {
                   onClick={() => setOpen(false)}
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                  {label}
+                  {t(key)}
                 </NavLink>
               ))}
               <button className="logout" type="button" onClick={() => setConfirming(true)}>
-                Log out
+                {t("nav.logout")}
               </button>
             </nav>
           </div>
@@ -82,17 +88,17 @@ export default function Navbar({ signedIn, onLogout }) {
             aria-labelledby="logout-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 id="logout-title">Log out of Trainova?</h2>
-            <p className="muted">You will need to sign in again to see your workouts.</p>
+            <h2 id="logout-title">{t("nav.logoutTitle")}</h2>
+            <p className="muted">{t("nav.logoutText")}</p>
             <div className="actions">
-              <button className="btn" type="button" onClick={confirmLogout}>Log out</button>
+              <button className="btn" type="button" onClick={confirmLogout}>{t("nav.logout")}</button>
               <button
                 className="btn secondary"
                 type="button"
                 autoFocus
                 onClick={() => setConfirming(false)}
               >
-                Stay signed in
+                {t("nav.stay")}
               </button>
             </div>
           </div>

@@ -48,7 +48,7 @@ button{min-height:40px}
 .planner h2{font-size:1.25rem;margin:0 0 12px}
 .planner h3{margin:16px 0 8px}
 .planner h4{margin:10px 0 4px;font-size:.95rem;color:var(--muted)}
-.planner ul{margin:0;padding-left:20px}
+.planner ul{margin:0;padding-inline-start:20px}
 .planner li{margin:2px 0}
 .muscle-lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 16px}
 .rest-day{font-weight:700;margin:16px 0 0}
@@ -58,7 +58,7 @@ button{min-height:40px}
 /* Trainova glass theme */
 :root{--bg:#1a1030;--surface:rgba(255,255,255,.11);--ink:#fff;--muted:rgba(255,255,255,.76);--line:rgba(255,255,255,.28);--accent:#ff7ac6;--on-accent:#fff;--good:#7df2b8;--warn:#ffc266;--cool:#93d6ff;color-scheme:dark;--glass:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.07));--blur:blur(26px) saturate(180%);--shine:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(255,255,255,.08),0 10px 40px rgba(20,5,45,.4)}
 body{background:var(--bg);text-shadow:0 1px 8px rgba(20,5,45,.35)}
-body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(26,16,48,.25),rgba(26,16,48,.5)),url("/trainova-background.jpg") center/cover no-repeat}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(26,16,48,.25),rgba(26,16,48,.5)),url("/trainova-background.png") center/cover no-repeat}
 .card,.nav,.modal-card{background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shine)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.card,.nav,.modal-card{background:rgba(40,22,80,.85)}}
 .workout{transition:transform .25s ease,box-shadow .25s ease}
@@ -81,7 +81,7 @@ input:-webkit-autofill{-webkit-text-fill-color:#fff;box-shadow:0 0 0 100px rgba(
 .library-title{border-top-color:var(--line)}
 .brand{font-family:"Pricedown","Pricedown Bl",Impact,"Arial Black",sans-serif;font-weight:400;font-size:2rem;line-height:1;letter-spacing:.02em;color:#fff;text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000,4px 5px 0 #000}
 .nav{display:block;padding:0;position:sticky;top:12px;z-index:20;width:calc(100% - 24px);max-width:900px;margin:12px auto 0}
-.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 10px 20px}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px;padding-inline:20px 14px}
 .burger{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-content:center;gap:5px;border-radius:50%;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.5);cursor:pointer;transition:transform .2s,filter .2s}
 .burger:hover{filter:brightness(1.2);transform:scale(1.07)}
 .burger i{display:block;width:20px;height:2px;border-radius:2px;background:#fff;transition:transform .35s ease,opacity .25s ease}
@@ -95,10 +95,32 @@ input:-webkit-autofill{-webkit-text-fill-color:#fff;box-shadow:0 0 0 100px rgba(
 .nav a{border-radius:999px;color:#fff;transition:background .2s,transform .2s;cursor:pointer}
 .nav a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
 .nav a.active{background:linear-gradient(180deg,rgba(255,150,210,.75),rgba(170,90,255,.6));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-.menu-inner .logout{margin-left:auto}
+.menu-inner .logout{margin-inline-start:auto}
 .modal-backdrop{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:rgba(15,5,35,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:fade .25s ease}
 .modal-card{width:100%;max-width:380px;padding:24px;animation:pop .3s cubic-bezier(.2,1.2,.4,1)}
 .modal-card h2{margin:0 0 6px;font-size:1.3rem}
 @keyframes fade{from{opacity:0}}
 @keyframes pop{from{opacity:0;transform:scale(.9) translateY(10px)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* Language toggle: glass segmented switch with a sliding highlight (fixed EN | عربي order in both directions) */
+.nav-actions{display:flex;align-items:center;gap:10px}
+.lang-toggle{position:relative;display:grid;grid-template-columns:1fr 1fr;direction:ltr;padding:3px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.06));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 14px rgba(20,5,45,.3)}
+.lang-toggle::before{content:"";position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:linear-gradient(180deg,rgba(255,150,210,.85),rgba(170,90,255,.7));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 12px rgba(255,90,200,.4);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.lang-toggle[data-lang="ar"]::before{transform:translateX(100%)}
+.lang-toggle button{position:relative;z-index:1;min-height:34px;min-width:50px;padding:0 12px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,.72);font:inherit;font-size:.9rem;font-weight:700;cursor:pointer;transition:color .25s}
+.lang-toggle button:hover{color:#fff}
+.lang-toggle button.on{color:#fff}
+.lang-toggle button:focus-visible{outline:2px solid #fff;outline-offset:1px}
+
+/* Arabic / right-to-left */
+html[lang="ar"] body{font-family:"Segoe UI",Tahoma,"Noto Sans Arabic","Geeza Pro","Helvetica Neue",Arial,sans-serif}
+html[lang="ar"] h1,html[lang="ar"] .brand{letter-spacing:0}
+html[dir="rtl"] input[type="email"],html[dir="rtl"] input[type="password"],html[dir="rtl"] input[type="number"],html[dir="rtl"] input[type="date"],html[dir="rtl"] input[name="sets"]{direction:ltr;text-align:right}
+html[dir="rtl"] input::placeholder{text-align:right}
+
+/* Smooth language switch and panels that scroll into view */
+@keyframes langfade{from{opacity:.25;filter:blur(6px)}}
+.lang-fade .page,.lang-fade .nav-bar .brand,.lang-fade .menu-inner,.lang-fade .modal-card{animation:langfade .35s ease}
+.scroll-target,[role="status"]{scroll-margin-top:96px}
+a.btn{display:inline-block;text-decoration:none;margin-top:12px}
