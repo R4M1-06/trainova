@@ -4,7 +4,7 @@ A responsive React SPA for tracking workout sessions. This Milestone 1 prototype
 
 ## Setup and run
 
-Install Node.js with npm. From the repository root:
+Install Node.js >=22.12.0 with npm. From the repository root:
 
 ```sh
 cd trainova
@@ -50,7 +50,7 @@ Milestone 1 requires placeholder auth forms. This version adds the team's reques
 - src/data/planner.js: exercise lists and weekly split schedules.
 - src/data/localAuth.js: browser-local demo accounts.
 - src/index.css: shared responsive styles.
-- public/trainova-background.jpg: background image used by the glass theme. The logo falls back to system fonts unless a licensed Pricedown font is supplied.
+- public/trainova-background.png: background image used by the glass theme. The logo falls back to system fonts unless a licensed Pricedown font is supplied.
 
 ## Render Static Site
 
